@@ -39,9 +39,10 @@ export function setUrlParameters(url: URL, options: Partial<IRestOptionsQuery>) 
 export async function transformResponseBody<T>(response: Response | null = null, responseType: HttpResponseFormat = "json"): Promise<[boolean, T | null]> {
 	if (!response)
 		return [false, null];
-
+	
+	const isResponseChunked = response.headers.get("Transfer-Encoding") === 'chunked';
 	const responseSize = parseInt(response.headers.get("Content-Length") ?? "");
-	if (response.status === 204 || !responseSize)
+	if (response.status === 204 || isResponseChunked)
 		return [true, null];
 
 	try {

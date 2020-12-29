@@ -60,7 +60,7 @@ typings/
 # next.js build output
 .next
 
-lib*/
+# lib*/
 test-results/
 Sources.tar*
 Sources.zip
